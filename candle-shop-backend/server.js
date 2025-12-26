@@ -5,7 +5,13 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://main.d3ot71att658vo.amplifyapp.com/', // Replace with YOUR Amplify URL
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // Test route
