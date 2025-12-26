@@ -25,7 +25,7 @@ function Orders() {
 
   const viewOrderDetails = async (orderId) => {
     try {
-      const response = await fetch(`http://localhost:5001/api/orders/${orderId}`);
+      const response = await fetch(`http://pprhxpttpm.us-east-1.awsapprunner.com/api/orders/${orderId}`);
       const data = await response.json();
       setSelectedOrder(data);
     } catch (error) {
@@ -35,7 +35,7 @@ function Orders() {
 
   const updateOrderStatus = async (orderId, status) => {
     try {
-      const response = await fetch(`http://localhost:5001/api/orders/${orderId}/status`, {
+      const response = await fetch(`http://pprhxpttpm.us-east-1.awsapprunner.com/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),

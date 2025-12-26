@@ -35,8 +35,8 @@ function Products() {
     e.preventDefault();
     
     const url = editingProduct 
-      ? `http://localhost:5001/api/products/${editingProduct.id}`
-      : 'http://localhost:5001/api/products';
+      ? `http://pprhxpttpm.us-east-1.awsapprunner.com/api/products/${editingProduct.id}`
+      : 'http://pprhxpttpm.us-east-1.awsapprunner.com/api/products';
     
     const method = editingProduct ? 'PUT' : 'POST';
     
@@ -85,7 +85,7 @@ function Products() {
     if (!confirm('Are you sure you want to delete this product?')) return;
 
     try {
-      const response = await fetch(`http://localhost:5001/api/products/${id}`, {
+      const response = await fetch(`http://pprhxpttpm.us-east-1.awsapprunner.com/api/products/${id}`, {
         method: 'DELETE',
       });
 
