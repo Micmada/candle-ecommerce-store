@@ -18,7 +18,7 @@ function Navbar() {
             className="text-2xl tracking-tight font-light text-neutral-900 hover:text-neutral-600 transition-colors duration-300"
             style={{ fontFamily: "'Cormorant', serif" }}
           >
-            Kate's Candles
+            Michael's Candles
           </Link>
           
           {/* Navigation Links */}

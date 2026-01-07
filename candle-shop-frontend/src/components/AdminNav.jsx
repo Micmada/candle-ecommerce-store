@@ -29,7 +29,7 @@ function AdminNav() {
                 className="text-xl tracking-tight font-light text-neutral-900 group-hover:text-neutral-600 transition-colors duration-300"
                 style={{ fontFamily: "'Cormorant', serif" }}
               >
-                Kate's Candles
+                Michael's Candles
               </div>
               <div className="text-xs tracking-wider text-neutral-400 uppercase">
                 Admin Panel

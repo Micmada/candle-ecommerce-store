@@ -16,7 +16,7 @@ function Home() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="overflow-hidden mb-8">
               <h1 className="text-7xl md:text-9xl tracking-tight font-light hero-text">
-                Kate's Candles
+                Michael's Candles
               </h1>
             </div>
             <div className="overflow-hidden mb-12">
@@ -104,7 +104,7 @@ function Home() {
               
               <div className="space-y-6 text-neutral-600 leading-relaxed text-lg font-light">
                 <p>
-                  At Kate's Candles, we believe that light and scent have the power to transform 
+                  At Michael's Candles, we believe that light and scent have the power to transform 
                   spaces and moments. Each candle is more than a product—it's an experience 
                   carefully designed to elevate your everyday rituals.
                 </p>
@@ -210,7 +210,7 @@ function Home() {
               </h2>
               <div className="w-24 h-px bg-neutral-900 mx-auto mb-8"></div>
               <p className="text-neutral-600 leading-relaxed text-lg font-light max-w-2xl mx-auto">
-                Every Kate's Candles candle undergoes a meticulous process of creation, 
+                Every Michael's Candles candle undergoes a meticulous process of creation, 
                 from fragrance formulation to final pour.
               </p>
             </div>
