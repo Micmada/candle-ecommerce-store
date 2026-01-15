@@ -172,7 +172,7 @@ candle-shop/
 ```
    Frontend runs on `http://localhost:5173`
 
-## 🗄️ Database Schema
+## Database Schema
 
 ### Tables
 
