@@ -24,50 +24,51 @@ technologies:
   - aws
 hostedUrl: https://main.d3ot71att658vo.amplifyapp.com
 ---
+
 # Candles - E-commerce Platform
+
 A full-stack e-commerce platform for a boutique candle maker, featuring a customer-facing storefront and comprehensive admin management system.
-Features
-Customer Features
 
-Browse product catalog
-Shopping cart with persistent storage
-Discount code system
-Stripe payment integration (GBP)
-Responsive design
+## Features
 
-Admin Features
+### Customer Features
+- Browse product catalog
+- Shopping cart with persistent storage
+- Discount code system
+- Stripe payment integration (GBP)
+- Responsive design
 
-Product management (Create, Read, Update, Delete)
-Order management and tracking
-Order status updates
-Discount code creation and management
-Sales analytics dashboard
+### Admin Features
+- Product management (Create, Read, Update, Delete)
+- Order management and tracking
+- Order status updates
+- Discount code creation and management
+- Sales analytics dashboard
 
-Tech Stack
-Frontend
+## Tech Stack
 
-React with Vite
-Tailwind CSS for styling
-React Router for navigation
-Stripe.js for payments
-Context API for state management
+### Frontend
+- React with Vite
+- Tailwind CSS for styling
+- React Router for navigation
+- Stripe.js for payments
+- Context API for state management
 
-Backend
+### Backend
+- Node.js with Express
+- PostgreSQL database
+- Stripe payment processing
+- bcrypt for password hashing
+- JWT for authentication
 
-Node.js with Express
-PostgreSQL database
-Stripe payment processing
-bcrypt for password hashing
-JWT for authentication
+### Deployment
+- **Frontend:** AWS Amplify
+- **Backend:** AWS App Runner
+- **Database:** Railway PostgreSQL
+- **CI/CD:** GitHub (automatic deployments)
 
-Deployment
-
-Frontend: AWS Amplify
-Backend: AWS App Runner
-Database: Railway PostgreSQL
-CI/CD: GitHub (automatic deployments)
-
-Project Structure
+## Project Structure
+```
 candle-shop/
 ├── candle-shop-frontend/
 │   ├── src/
@@ -100,34 +101,39 @@ candle-shop/
     │   └── database.js
     ├── server.js
     └── package.json
-Local Development Setup
-Prerequisites
+```
 
-Node.js 18+
-npm or yarn
-PostgreSQL (local or Railway account)
-Stripe account (test mode)
+## Local Development Setup
 
-Backend Setup
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- PostgreSQL (local or Railway account)
+- Stripe account (test mode)
 
-Navigate to backend folder:
+### Backend Setup
 
-bash   cd candle-shop-backend
+1. Navigate to backend folder:
+```bash
+   cd candle-shop-backend
+```
 
-Install dependencies:
+2. Install dependencies:
+```bash
+   npm install
+```
 
-bash   npm install
-
-Create .env file:
-
-env   PORT=5001
+3. Create `.env` file:
+```env
+   PORT=5001
    DATABASE_URL=postgresql://username:password@localhost:5432/candle_shop
    JWT_SECRET=your_secret_key_here
    STRIPE_SECRET_KEY=sk_test_your_stripe_key
+```
 
-Set up database:
-
-bash   # Connect to PostgreSQL
+4. Set up database:
+```bash
+   # Connect to PostgreSQL
    psql postgres
    
    # Create database
@@ -135,249 +141,258 @@ bash   # Connect to PostgreSQL
    
    # Run setup script (see setup-database.js)
    node setup-database.js
+```
 
-Start development server:
+5. Start development server:
+```bash
+   npm run dev
+```
+   Backend runs on `http://localhost:5001`
 
-bash   npm run dev
-Backend runs on http://localhost:5001
-Frontend Setup
+### Frontend Setup
 
-Navigate to frontend folder:
+1. Navigate to frontend folder:
+```bash
+   cd candle-shop-frontend
+```
 
-bash   cd candle-shop-frontend
+2. Install dependencies:
+```bash
+   npm install
+```
 
-Install dependencies:
+3. Create `.env` file:
+```env
+   VITE_API_URL=http://localhost:5001/api
+```
 
-bash   npm install
+4. Start development server:
+```bash
+   npm run dev
+```
+   Frontend runs on `http://localhost:5173`
 
-Create .env file:
+## 🗄️ Database Schema
 
-env   VITE_API_URL=http://localhost:5001/api
+### Tables
 
-Start development server:
+**products**
+- `id`, `name`, `description`, `price`, `stock_quantity`, `image_url`, `is_active`, `created_at`, `updated_at`
 
-bash   npm run dev
-Frontend runs on http://localhost:5173
-🗄 Database Schema
-Tables
-products
+**orders**
+- `id`, `customer_email`, `customer_name`, `customer_phone`, `shipping_address`, `total_amount`, `status`, `stripe_payment_intent_id`, `notes`, `created_at`, `updated_at`
 
-id, name, description, price, stock_quantity, image_url, is_active, created_at, updated_at
+**order_items**
+- `id`, `order_id`, `product_id`, `quantity`, `price_at_purchase`
 
-orders
+**discount_codes**
+- `id`, `code`, `discount_type`, `discount_value`, `is_active`, `expires_at`, `created_at`
 
-id, customer_email, customer_name, customer_phone, shipping_address, total_amount, status, stripe_payment_intent_id, notes, created_at, updated_at
+**users**
+- `id`, `email`, `password_hash`, `role`, `created_at`
 
-order_items
+## Deployment
 
-id, order_id, product_id, quantity, price_at_purchase
+### Prerequisites
+- AWS Account
+- Railway Account
+- GitHub Account
 
-discount_codes
+### Backend Deployment (AWS App Runner)
 
-id, code, discount_type, discount_value, is_active, expires_at, created_at
-
-users
-
-id, email, password_hash, role, created_at
-
-Deployment
-Prerequisites
-
-AWS Account
-Railway Account
-GitHub Account
-
-Backend Deployment (AWS App Runner)
-
-Push code to GitHub:
-
-bash   git add .
+1. Push code to GitHub:
+```bash
+   git add .
    git commit -m "Initial commit"
    git push origin main
+```
 
-In AWS Console → App Runner:
+2. In AWS Console → App Runner:
+   - Create service from GitHub repository
+   - Select repository: `candle-shop`
+   - Source directory: `candle-shop-backend`
+   - Build command: `npm install`
+   - Start command: `node server.js`
+   - Port: `8080`
 
-Create service from GitHub repository
-Select repository: candle-shop
-Source directory: candle-shop-backend
-Build command: npm install
-Start command: node server.js
-Port: 8080
+3. Add environment variables in App Runner:
+```
+   PORT: 8080
+   DATABASE_URL: (from Railway)
+   JWT_SECRET: (your secret)
+   STRIPE_SECRET_KEY: (from Stripe)
+   NODE_ENV: production
+```
 
+### Frontend Deployment (AWS Amplify)
 
-Add environment variables in App Runner:
+1. In AWS Console → Amplify:
+   - Connect GitHub repository
+   - Select repository: `candle-shop`
+   - Root directory: `candle-shop-frontend`
+   - Build command: `npm run build`
+   - Output directory: `dist`
 
-PORT: 8080
-DATABASE_URL: (from Railway)
-JWT_SECRET: (your secret)
-STRIPE_SECRET_KEY: (from Stripe)
-NODE_ENV: production
+2. Add environment variable:
+```
+   VITE_API_URL: (your App Runner URL + /api)
+```
 
+### Database Setup (Railway)
 
+1. In Railway:
+   - Create new project
+   - Provision PostgreSQL
+   - Copy `DATABASE_URL`
+   - Connect via psql and run table creation scripts
 
-Frontend Deployment (AWS Amplify)
+## Stripe Testing
 
-In AWS Console → Amplify:
-
-Connect GitHub repository
-Select repository: candle-shop
-Root directory: candle-shop-frontend
-Build command: npm run build
-Output directory: dist
-
-
-Add environment variable:
-
-VITE_API_URL: (your App Runner URL + /api)
-
-
-
-Database Setup (Railway)
-
-In Railway:
-
-Create new project
-Provision PostgreSQL
-Copy DATABASE_URL
-Connect via psql and run table creation scripts
-
-
-
-Stripe Testing
 Use these test cards in development:
-Successful payment:
 
-Card: 4242 4242 4242 4242
-Expiry: Any future date
-CVC: Any 3 digits
-ZIP: Any 5 digits
+**Successful payment:**
+- Card: `4242 4242 4242 4242`
+- Expiry: Any future date
+- CVC: Any 3 digits
+- ZIP: Any 5 digits
 
-Declined payment:
+**Declined payment:**
+- Card: `4000 0000 0000 0002`
 
-Card: 4000 0000 0000 0002
+## Environment Variables
 
-Environment Variables
-Backend
-envPORT=5001
+### Backend
+```env
+PORT=5001
 DATABASE_URL=postgresql://user:pass@host:5432/dbname
 JWT_SECRET=your_jwt_secret_key
 STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
 NODE_ENV=development
-Frontend
-envVITE_API_URL=http://localhost:5001/api
-API Endpoints
-Public Endpoints
+```
 
-GET /api/test - Health check
-GET /api/products - Get all active products
-GET /api/products/:id - Get single product
-POST /api/orders/create-payment-intent - Create Stripe payment intent
-POST /api/orders - Create order
-POST /api/discounts/validate - Validate discount code
+### Frontend
+```env
+VITE_API_URL=http://localhost:5001/api
+```
 
-Admin Endpoints
+## API Endpoints
 
-POST /api/products - Create product
-PUT /api/products/:id - Update product
-DELETE /api/products/:id - Delete product
-GET /api/orders - Get all orders
-GET /api/orders/:id - Get single order
-PUT /api/orders/:id/status - Update order status
-GET /api/discounts - Get all discount codes
-POST /api/discounts - Create discount code
-PUT /api/discounts/:id - Update discount code
-DELETE /api/discounts/:id - Delete discount code
+### Public Endpoints
+- `GET /api/test` - Health check
+- `GET /api/products` - Get all active products
+- `GET /api/products/:id` - Get single product
+- `POST /api/orders/create-payment-intent` - Create Stripe payment intent
+- `POST /api/orders` - Create order
+- `POST /api/discounts/validate` - Validate discount code
 
-Deployment Updates
-Update Backend
-bash# Make changes to backend code
+### Admin Endpoints
+- `POST /api/products` - Create product
+- `PUT /api/products/:id` - Update product
+- `DELETE /api/products/:id` - Delete product
+- `GET /api/orders` - Get all orders
+- `GET /api/orders/:id` - Get single order
+- `PUT /api/orders/:id/status` - Update order status
+- `GET /api/discounts` - Get all discount codes
+- `POST /api/discounts` - Create discount code
+- `PUT /api/discounts/:id` - Update discount code
+- `DELETE /api/discounts/:id` - Delete discount code
+
+## Deployment Updates
+
+### Update Backend
+```bash
+# Make changes to backend code
 git add candle-shop-backend/
 git commit -m "Update backend feature"
 git push
 # App Runner automatically redeploys
-Update Frontend
-bash# Make changes to frontend code
+```
+
+### Update Frontend
+```bash
+# Make changes to frontend code
 git add candle-shop-frontend/
 git commit -m "Update frontend feature"
 git push
 # Amplify automatically rebuilds and redeploys
-Cost Breakdown
-Development (Local):
+```
 
-Free
+## Cost Breakdown
 
-Production (AWS + Railway):
+**Development (Local):**
+- Free
 
-AWS App Runner: ~$5-7/month
-AWS Amplify: Free tier (1000 build minutes/month)
-Railway PostgreSQL: $5/month credit (free for small usage)
-Total: ~$5-12/month
+**Production (AWS + Railway):**
+- AWS App Runner: ~$5-7/month
+- AWS Amplify: Free tier (1000 build minutes/month)
+- Railway PostgreSQL: $5/month credit (free for small usage)
+- **Total:** ~$5-12/month
 
-Troubleshooting
-Backend won't start
+## Troubleshooting
 
-Check DATABASE_URL is correct
-Verify all environment variables are set
-Check App Runner logs in AWS Console
+### Backend won't start
+- Check `DATABASE_URL` is correct
+- Verify all environment variables are set
+- Check App Runner logs in AWS Console
 
-Frontend can't connect to backend
+### Frontend can't connect to backend
+- Verify `VITE_API_URL` is correct
+- Check CORS settings in `server.js`
+- Ensure App Runner service is running
 
-Verify VITE_API_URL is correct
-Check CORS settings in server.js
-Ensure App Runner service is running
+### Database connection failed
+- Verify Railway database is running
+- Check `DATABASE_URL` format
+- Ensure IP is whitelisted (Railway allows all by default)
 
-Database connection failed
+### Stripe payments failing
+- Verify `STRIPE_SECRET_KEY` is set
+- Check publishable key in `CheckoutPage.jsx`
+- Use test cards in test mode
 
-Verify Railway database is running
-Check DATABASE_URL format
-Ensure IP is whitelisted (Railway allows all by default)
+## Learning Resources
+- [React Documentation](https://react.dev)
+- [Express.js Guide](https://expressjs.com)
+- [PostgreSQL Tutorial](https://www.postgresql.org/docs/)
+- [Stripe API Docs](https://stripe.com/docs/api)
+- [AWS App Runner Docs](https://docs.aws.amazon.com/apprunner/)
+- [Tailwind CSS](https://tailwindcss.com)
 
-Stripe payments failing
+## Contributing
 
-Verify STRIPE_SECRET_KEY is set
-Check publishable key in CheckoutPage.jsx
-Use test cards in test mode
-
-Learning Resources
-
-React Documentation
-Express.js Guide
-PostgreSQL Tutorial
-Stripe API Docs
-AWS App Runner Docs
-Tailwind CSS
-
-Contributing
 This is a client project. For future enhancements:
 
-Fork the repository
-Create a feature branch
-Make your changes
-Test thoroughly
-Submit a pull request
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-Licence
+## Licence
+
 MIT
 
-Developer
-Built by Michael Eddleston
-Future Enhancements
+## Developer
 
- Admin authentication and login
- Image upload to S3 for products
- Email notifications for orders
- Customer accounts and order history
- Product reviews and ratings
- Inventory alerts
- Sales analytics and reporting
- Custom domain setup
- SEO optimization
- Newsletter subscription
+Built by **Michael Eddleston**
 
-Support
+## Future Enhancements
+
+- [ ] Admin authentication and login
+- [ ] Image upload to S3 for products
+- [ ] Email notifications for orders
+- [ ] Customer accounts and order history
+- [ ] Product reviews and ratings
+- [ ] Inventory alerts
+- [ ] Sales analytics and reporting
+- [ ] Custom domain setup
+- [ ] SEO optimization
+- [ ] Newsletter subscription
+
+## Support
+
 For issues or questions:
-
-Check troubleshooting section
-Review AWS CloudWatch logs
-Check Railway database logs
-Contact developer
+- Check troubleshooting section
+- Review AWS CloudWatch logs
+- Check Railway database logs
+- Contact developer
